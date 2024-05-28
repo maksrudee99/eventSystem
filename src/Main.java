@@ -45,7 +45,7 @@ public class Main {
         event.setLocation(location);
         event.addTickets(tickets);
 
-        // Create Resources
+        // Create Resource
         String addMoreResources;
         do {
             Resource resource = new Resource();
