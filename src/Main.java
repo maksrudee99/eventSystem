@@ -3,24 +3,49 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
 
         // Create a Location
         Location location = new Location();
-        location.setLocationName("Stadium");
-        location.setCapacity(5000);
+
+        System.out.println("Enter the location name:");
+        String locationName = input.next();
+        location.setLocationName(locationName);
+
+        System.out.println("Enter the location capacity:");
+        int capacity = input.nextInt();
+        location.setCapacity(capacity);
 
         // Create Tickets
         Tickets tickets = new Tickets();
-        tickets.setQuantity(1000);
-        tickets.setPrice(50.0);
+
+        System.out.println("Enter the quantity of tickets:");
+        int quantity = input.nextInt();
+        tickets.setQuantity(quantity);
+
+        System.out.println("Enter the price of tickets:");
+        double price = input.nextDouble();
+        tickets.setPrice(price);
 
         // Create a Resource
         Resource resource = new Resource();
-        resource.setResourceName("Sound System");
+
+        System.out.println("Enter the resource name:");
+        String resourceName = input.next();
+        resource.setResourceName(resourceName);
+        if (resourceName != null) {
+            System.out.println("There is something else to add:");
+
+        }
+
 
         // Create an Event
         Event event = new Event();
-        event.setName("Concert");
+
+        System.out.println("Enter the event name:");
+        String eventName = input.next();
+        event.setName(eventName);
+
         event.setDate(new Date()); // sets the date to current date and time
         event.setLocation(location);
         event.addTickets(tickets);
