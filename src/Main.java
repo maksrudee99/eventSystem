@@ -12,6 +12,7 @@ public class Main {
         Location location = new Location();
 
         while (true) {
+
             System.out.println("Enter the location name:");
             String locationName = input.nextLine();
 
