@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.Scanner;
 
 public class Event {
     private String eventName;
