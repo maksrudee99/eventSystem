@@ -10,54 +10,26 @@ public class Main {
 
         // Create a Location
         Location location = new Location();
+
         while (true) {
             System.out.println("Enter the location name:");
             String locationName = input.nextLine();
 
-            if (locationName == null || locationName.isEmpty()) {
-                System.out.println("Location name cannot be null or empty. Try again.");
-                continue;
+            if (location.setLocationName(locationName)) {
+                break;
             }
-            if (!locationName.matches("[A-Za-z0-9 ]*")) {
-                System.out.println("Location name can only contain letters, digits and spaces. Try again.");
-                continue;
-            }
-            location.setLocationName(locationName);
-            break;
         }
-
-//        while (true) {
-//            System.out.println("Enter the location name:");
-//            String locationName = input.nextLine();
-//
-//            if (locationName == null || locationName.isEmpty()) {
-//                System.out.println("Location name cannot be null or empty. Try again.");
-//                continue;
-//            }
-//            if (!locationName.matches("[A-Za-z0-9 ]*")) {
-//                System.out.println("Location name can only contain letters, digits and spaces. Try again.");
-//                continue;
-//            }
-//            location.setLocationName(locationName);
-//            break;
-//        }
-
 
         while (true) {
             System.out.println("Enter the location capacity:");
-            try {
-                if (!input.hasNextInt()) {
-                    System.out.println("Capacity must be a number. Please, try again.");
-                    input.nextLine(); // discard the non-integer input
-                    continue;
-                }
-                int capacity = input.nextInt();
-                location.setCapacity(capacity);
+            if (!input.hasNextInt()) {
+                System.out.println("Capacity must be a number. Please, try again.");
+                input.nextLine(); // discard the non-integer input
+                continue;
+            }
+            int capacity = input.nextInt();
+            if (location.setCapacity(capacity)) {
                 break;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                input.nextLine(); // discard the invalid input
             }
         }
 
