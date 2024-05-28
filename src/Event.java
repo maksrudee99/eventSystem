@@ -1,13 +1,17 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Event {
     private String eventName;
     private Date date;
     private Location location;
     private Tickets tickets;
-    private Resource resource;
+    private List<Resource> resources;
 
-    public Event() {}
+    public Event() {
+        this.resources = new ArrayList<>();
+    }
 
     public void setName(String name) {
         this.eventName = name;
@@ -46,14 +50,14 @@ public class Event {
     }
 
     public void addResource(Resource resource) {
-        this.resource = resource;
+        this.resources.add(resource);
     }
 
-    public Resource getResource() {
-        return this.resource;
+    public List<Resource> getResources() {
+        return this.resources;
     }
 
-    public void removeResource() {
-        this.resource = null;
+    public void removeResource(Resource resource) {
+        this.resources.remove(resource);
     }
 }

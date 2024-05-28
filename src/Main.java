@@ -27,17 +27,12 @@ public class Main {
         double price = input.nextDouble();
         tickets.setPrice(price);
 
-        // Create a Resource
-        Resource resource = new Resource();
-
-        System.out.println("Enter the resource name:");
-        String resourceName = input.next();
-        resource.setResourceName(resourceName);
-        if (resourceName != null) {
-            System.out.println("There is something else to add:");
-
-        }
-
+//        // Create a Resource
+//        Resource resource = new Resource();
+//
+//        System.out.println("Enter the resource name:");
+//        String resourceName = input.next();
+//        resource.setResourceName(resourceName);
 
         // Create an Event
         Event event = new Event();
@@ -49,7 +44,21 @@ public class Main {
         event.setDate(new Date()); // sets the date to current date and time
         event.setLocation(location);
         event.addTickets(tickets);
-        event.addResource(resource);
+
+        // Create Resources
+        String addMoreResources;
+        do {
+            Resource resource = new Resource();
+
+            System.out.println("Enter the resource name:");
+            String resourceName = input.next();
+            resource.setResourceName(resourceName);
+
+            event.addResource(resource);
+
+            System.out.println("Do you want to add more resources? (yes/no)");
+            addMoreResources = input.next();
+        } while (addMoreResources.equalsIgnoreCase("yes"));
 
         // Display Event details
         System.out.println("Event Name: " + event.getName());
@@ -58,6 +67,8 @@ public class Main {
         System.out.println("Capacity: " + event.getLocation().getCapacity());
         System.out.println("Tickets Quantity: " + event.getTickets().getQuantity());
         System.out.println("Ticket Price: " + event.getTickets().getPrice());
-        System.out.println("Resource: " + event.getResource().getResourceName());
+        for (Resource resource : event.getResources()) {
+            System.out.println("Resource: " + resource.getResourceName());
+        }
     }
 }
