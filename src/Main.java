@@ -17,18 +17,26 @@ public class Main {
         tickets.setQuantity();
         tickets.setPrice();
 
-        // Create a Resource
-        Resource resource = new Resource();
-        resource.setResourceName();
-
-
         // Create an Event
         Event event = new Event();
         event.setName();
         event.setDate();
         event.setLocation(location);
         event.addTickets(tickets);
-        event.addResource(resource);
+
+        Scanner scanner = new Scanner(System.in);
+        String continueAdding = "yes";
+        while (continueAdding.equalsIgnoreCase("yes")) {
+            // Create a Resource
+            Resource resource = new Resource();
+            resource.setResourceName();
+
+            // Add the resource to the event
+            event.addResource(resource);
+
+            System.out.println("Do you want to add another resource? (yes/no)");
+            continueAdding = scanner.nextLine();
+        }
 
         // Display Event details
         System.out.println("Event Name: " + event.getName());
@@ -37,6 +45,8 @@ public class Main {
         System.out.println("Capacity: " + event.getLocation().getCapacity());
         System.out.println("Tickets Quantity: " + event.getTickets().getQuantity());
         System.out.println("Ticket Price: " + event.getTickets().getPrice());
-        System.out.println("Resource: " + event.getResource().getResourceName());
+        for (Resource resource : event.getResources()) {
+            System.out.println("Resource: " + resource.getResourceName());
+        }
     }
 }

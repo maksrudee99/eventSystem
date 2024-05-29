@@ -2,15 +2,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
     private String eventName;
     private Date date;
     private Location location;
     private Tickets tickets;
-    private Resource resource;
+    private final List<Resource> resources;
 
-    public Event() {}
+    public Event() {
+
+        this.resources = new ArrayList<>();
+
+    }
 
     public void setName() {
         Scanner scanner = new Scanner(System.in);
@@ -74,14 +80,18 @@ public class Event {
     }
 
     public void addResource(Resource resource) {
-        this.resource = resource;
+        this.resources.add(resource);
     }
 
-    public Resource getResource() {
-        return this.resource;
+    public List<Resource> getResources() {
+        return this.resources;
     }
 
-    public void removeResource() {
-        this.resource = null;
+    public Resource getResource(int index) {
+        return this.resources.get(index);
+    }
+
+    public void removeResource(Resource resource) {
+        this.resources.remove(resource);
     }
 }
