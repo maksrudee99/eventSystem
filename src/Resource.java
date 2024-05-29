@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Resource {
-    private String resourceName;
+    public String resourceName;
 
     public Resource() {}
 
@@ -17,9 +17,5 @@ public class Resource {
                 break;
             }
         }
-    }
-
-    public String getResourceName() {
-        return this.resourceName;
     }
 }
