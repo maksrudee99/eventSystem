@@ -1,33 +1,41 @@
+import java.util.Scanner;
+
 public class Location {
     private String locationName;
     private int capacity;
 
     public Location() {}
 
-    public boolean setLocationName(String name) {
-        if (name == null || name.isEmpty()) {
-            System.out.println("Location name cannot be null or empty. Try again.");
-            return false;
+    public void setLocationName() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter the location name:");
+            String name = scanner.next();
+            if (name.isEmpty()) {
+                System.out.println("Location name cannot be empty. Please, try again.");
+            } else {
+                this.locationName = name;
+                break;
+            }
         }
-        if (!name.matches("[A-Za-z0-9 ]*")) {
-            System.out.println("Location name can only contain letters, digits and spaces. Try again.");
-            return false;
-        }
-        this.locationName = name;
-        return true;
     }
 
     public String getLocationName() {
         return this.locationName;
     }
 
-    public boolean setCapacity(int capacity) {
-        if (capacity <= 0) {
-            System.out.println("Capacity must be a positive number. Try again.");
-            return false;
+    public void setCapacity() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter the location capacity:");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Capacity must be a number. Please, try again.");
+                scanner.next(); // discard the non-integer input
+            } else {
+                this.capacity = scanner.nextInt();
+                break;
+            }
         }
-        this.capacity = capacity;
-        return true;
     }
 
     public int getCapacity() {
