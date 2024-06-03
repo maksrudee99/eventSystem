@@ -13,88 +13,93 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String answer;
-
-        while (!exit) {
-            System.out.println("Hello! Please select what you want to do:");
-            System.out.println("Select all Events(SELECT), Create new Event(CREATE)");
-            answer = scanner.nextLine();
-
-        Scanner scanner = new Scanner(System.in);
         int option;
 
-        do {
+        while (!exit) {
             System.out.println("Please select an option:");
             System.out.println("1. Display all events");
             System.out.println("2. Create a new event");
             System.out.println("3. Exit");
             option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
             switch (option) {
                 case 1:
                     // Display existing events
-                    Event.displayEvents();
+                    exit = selectAllEvents();
                     break;
                 case 2:
-                    // Create a Location
-                    Location location = new Location();
-                    location.setLocationName();
-                    location.setCapacity();
+                    // Create a new event
+                    exit = createEvent();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
 
-                    // Create Tickets
-                    Tickets tickets = new Tickets();
-                    tickets.setQuantity();
-                    tickets.setPrice();
+    public static void editEvent(){
+        // tbd
+    }
 
-                    String continueAdding = "yes";
+    public static void deleteEvent(){
+        // tbd
+    }
 
-                    // declare the resource List
-                    List<Resource> resources;
-                    resources = new ArrayList<>();
+    public static void selectEvent(){
+        // tbd
+    }
 
-                    while (continueAdding.equalsIgnoreCase("yes")) {
-                        // Create a Resource
-                        Resource resource = new Resource();
-                        resource.setResourceName();
+    public static boolean createEvent() {
+        Location location = new Location();
+        location.setLocationName();
+        location.setCapacity();
 
-                        // Add the resource to the List
-                        resources.add(resource);
+        // Create Tickets
+        Tickets tickets = new Tickets();
+        tickets.setQuantity();
+        tickets.setPrice();
 
-                        System.out.println("Do you want to add another resource? (yes/no)");
-                        continueAdding = scanner.next();
-                    }
+        Scanner scanner = new Scanner(System.in);
+        String continueAdding = "yes";
 
-                    // Create an Event
-                    Event event = new Event(location, tickets, resources);
-                    event.setName();
-                    event.setDate();
+        // declare the resource List
+        List<Resource> resources;
+        resources = new ArrayList<>();
 
-                    // Display Event details
-                    System.out.println("Event Name: " + event.eventName);
-                    System.out.println("Event Date: " + event.date);
-                    System.out.println("Location: " + event.location.locationName);
-                    System.out.println("Capacity: " + event.location.capacity);
-                    System.out.println("Tickets Quantity: " + event.tickets.quantity);
-                    System.out.println("Ticket Price: " + event.tickets.price);
-                    for (Resource resource : event.resources) {
-                        System.out.println("Resource: " + resource.resourceName);
-                    }
+        while (continueAdding.equalsIgnoreCase("yes")) {
+            // Create a Resource
+            Resource resource = new Resource();
+            resource.setResourceName();
+            // Add the resource to the List
+            resources.add(resource);
+            System.out.println("Do you want to add another resource? (yes/no)");
+            continueAdding = scanner.nextLine();
+        }
+
+        // Create an Event
+        Event event = new Event(location, tickets, resources);
+        event.setName();
+        event.setDate();
+
+        // Display Event details
+        System.out.println("Event Name: " + event.eventName);
+        System.out.println("Event Date: " + event.date);
+        System.out.println("Location: " + event.location.locationName);
+        System.out.println("Capacity: " + event.location.capacity);
+        System.out.println("Tickets Quantity: " + event.tickets.quantity);
+        System.out.println("Ticket Price: " + event.tickets.price);
+        for (Resource resource : event.resources) {
+            System.out.println("Resource: " + resource.resourceName);
+        }
 
         event.saveEvent();
 
         return false;
-    }
-
-    public static void editEvent(){
-        //tbd
-    }
-
-    public static void deleteEvent(){
-        //tbd
-    }
-
-    public static void selectEvent(){
-        //tbd
     }
 
     public static boolean selectAllEvents() {
@@ -119,8 +124,7 @@ public class Main {
                     int ticketsQuantity = resultSet.getInt("tickets_quantity");
                     String ticketPrice = resultSet.getString("ticket_price");
                     String jsonString = resultSet.getString("resource_name");
-                    List<String> resourceNames;
-                    resourceNames = objectMapper.readValue(jsonString, new TypeReference<List<Resource>>() {});
+                    List<Resource> resourceNames = objectMapper.readValue(jsonString, new TypeReference<List<Resource>>() {});
 
                     // Liste ausgeben
                     System.out.printf("Name: %s, Date: %s, Location: %s, Capacity: %d, Tickets: %d, Price: %s, Resources: %s%n",
@@ -136,16 +140,7 @@ public class Main {
         } catch (ClassNotFoundException e) {
             System.out.println("SQLite JDBC driver not found. Make sure it is added to the classpath.");
         }
-
+        
         return false;
-                    event.saveEvent();
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        } while (option != 3);
     }
 }
