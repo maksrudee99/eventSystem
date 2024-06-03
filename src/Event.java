@@ -37,6 +37,7 @@ public class Event {
     public void setDate() {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = new Date();
         while (true) {
             System.out.println("Enter the event date (dd/mm/yyyy):");
             String dateInput = scanner.nextLine();
@@ -44,8 +45,13 @@ public class Event {
                 System.out.println("Date cannot be empty. Please, try again.");
             } else {
                 try {
-                    this.date = dateFormat.parse(dateInput);
-                    break;
+                    Date inputDate = dateFormat.parse(dateInput);
+                    if (inputDate.before(currentDate)) {
+                        System.out.println("The event date must be in the future. Please, try again.");
+                    } else {
+                        this.date = inputDate;
+                        break;
+                    }
                 } catch (ParseException e) {
                     System.out.println("Invalid date format. Please, try again.");
                 }
@@ -90,6 +96,37 @@ public class Event {
             System.out.println("Driver not found");
         } catch (JsonProcessingException e) {
             System.out.println("Error converting resources to JSON");
+        }
+    }
+
+    public static void displayEvents() {
+        String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
+
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+
+            // Connect to the database
+            try (Connection connection = DriverManager.getConnection(jdbcUrl);
+                 Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("SELECT * FROM Event")) {
+
+                // Display the events
+                while (resultSet.next()) {
+                    System.out.println("Event Name: " + resultSet.getString("name"));
+                    System.out.println("Event Date: " + resultSet.getDate("date"));
+                    System.out.println("Location: " + resultSet.getString("location_name"));
+                    System.out.println("Capacity: " + resultSet.getInt("capacity"));
+                    System.out.println("Tickets Quantity: " + resultSet.getInt("tickets_quantity"));
+                    System.out.println("Ticket Price: " + resultSet.getDouble("ticket_price"));
+                    System.out.println("Resources: " + resultSet.getString("resource_name"));
+                    System.out.println("-----------------------------");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving events from the database");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver not found");
         }
     }
 }
