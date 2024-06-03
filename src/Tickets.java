@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Tickets {
-    private int quantity;
-    private double price;
+    public int quantity;
+    public double price;
 
     public Tickets() {}
 
@@ -20,10 +20,6 @@ public class Tickets {
         }
     }
 
-    public int getQuantity() {
-        return this.quantity;
-    }
-
     public void setPrice() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -36,9 +32,5 @@ public class Tickets {
                 break;
             }
         }
-    }
-
-    public double getPrice() {
-        return this.price;
     }
 }

@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Location {
-    private String locationName;
-    private int capacity;
+    public String locationName;
+    public int capacity;
 
     public Location() {}
 
@@ -20,10 +20,6 @@ public class Location {
         }
     }
 
-    public String getLocationName() {
-        return this.locationName;
-    }
-
     public void setCapacity() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -36,9 +32,5 @@ public class Location {
                 break;
             }
         }
-    }
-
-    public int getCapacity() {
-        return this.capacity;
     }
 }

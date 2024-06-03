@@ -1,21 +1,23 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Event {
-    private String eventName;
-    private Date date;
-    private Location location;
-    private Tickets tickets;
-    private final List<Resource> resources;
+    public String eventName;
+    public Date date;
+    public final Location location;
+    public final Tickets tickets;
+    public final List<Resource> resources;
 
-    public Event() {
-
-        this.resources = new ArrayList<>();
-
+    public Event(Location location, Tickets tickets, List<Resource> resources) {
+        this.location = location;
+        this.tickets = tickets;
+        this.resources = resources;
     }
 
     public void setName() {
@@ -30,10 +32,6 @@ public class Event {
                 break;
             }
         }
-    }
-
-    public String getName() {
-        return this.eventName;
     }
 
     public void setDate() {
@@ -55,43 +53,43 @@ public class Event {
         }
     }
 
-    public Date getDate() {
-        return this.date;
-    }
+    public void saveEvent() {
+        String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
 
-    public Location getLocation() {
-        return this.location;
-    }
+            // Convert resources to JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String resourcesJson = objectMapper.writeValueAsString(this.resources);
 
-    public void addTickets(Tickets tickets) {
-        this.tickets = tickets;
-    }
+            // Verbindung zur Datenbank herstellen
+            try (Connection connection = DriverManager.getConnection(jdbcUrl);
+                 PreparedStatement preparedStatement = connection.prepareStatement(
+                         "INSERT INTO Event (name, date, location_name, capacity, tickets_quantity, ticket_price, resource_name) VALUES (?, ?, ?, ?, ?, ?, ?)")
+            ) {
+                // Parameter setzen
+                preparedStatement.setString(1, this.eventName);
+                java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
+                preparedStatement.setDate(2, sqlDate);
+                preparedStatement.setString(3, this.location.locationName);
+                preparedStatement.setInt(4, this.location.capacity);
+                preparedStatement.setInt(5, this.tickets.quantity);
+                preparedStatement.setDouble(6, this.tickets.price);
+                preparedStatement.setString(7, resourcesJson);
 
-    public Tickets getTickets() {
-        return this.tickets;
-    }
+                // SQL-Befehl ausführen
+                preparedStatement.executeUpdate();
 
-    public void removeTickets() {
-        this.tickets = null;
-    }
-
-    public void addResource(Resource resource) {
-        this.resources.add(resource);
-    }
-
-    public List<Resource> getResources() {
-        return this.resources;
-    }
-
-    public Resource getResource(int index) {
-        return this.resources.get(index);
-    }
-
-    public void removeResource(Resource resource) {
-        this.resources.remove(resource);
+                System.out.println("Event saved successfully");
+            }
+        } catch (SQLException e) {
+            System.out.println("Event not saved. Retry");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver not found");
+        } catch (JsonProcessingException e) {
+            System.out.println("Error converting resources to JSON");
+        }
     }
 }
