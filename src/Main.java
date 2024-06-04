@@ -20,7 +20,8 @@ public class Main {
             System.out.println("1. Display all events");
             System.out.println("2. Create a new event");
             System.out.println("3. Select an event");
-            System.out.println("4. Exit");
+            System.out.println("4. Delete an event");
+            System.out.println("5. Exit");
             option = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -37,6 +38,9 @@ public class Main {
                     exit = selectEvent();
                     break;
                 case 4:
+                    exit = deleteEvent();
+                    break;
+                case 5:
                     System.out.println("Exiting...");
                     exit = true;
                     break;
@@ -50,8 +54,35 @@ public class Main {
         // tbd
     }
 
-    public static void deleteEvent(){
-        // tbd
+    public static boolean deleteEvent(){
+        Scanner scanner = new Scanner(System.in);
+        String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
+        String eventName;
+
+        System.out.println("Which event do yu want delete(Write the Event Name): ");
+        eventName = scanner.nextLine();
+
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+
+            // Verbindung zur Datenbank herstellen
+            try (Connection connection = DriverManager.getConnection(jdbcUrl);
+                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Event WHERE name = ?")) {
+                preparedStatement.setString(1, eventName);
+
+                // SQL-Befehl ausführen
+                preparedStatement.executeUpdate();
+
+                System.out.println("Event " + eventName + "deleted");
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to delete event. Error: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC driver not found. Make sure it is added to the classpath.");
+        }
+
+        return false;
     }
 
     public static boolean selectEvent() {
@@ -59,7 +90,7 @@ public class Main {
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
         String eventName;
 
-        System.out.println("Which event do yu want select: ");
+        System.out.println("Which event do yu want select(Write the Event Name): ");
         eventName = scanner.nextLine();
 
         try {
