@@ -165,9 +165,15 @@ public class Main {
                 preparedStatement.setString(1, eventName);
 
                 // SQL-Befehl ausführen
-                preparedStatement.executeUpdate();
+                int rowsAffected = preparedStatement.executeUpdate();
 
-                System.out.println("Event " + eventName + "deleted");
+                if (rowsAffected > 0) {
+                    System.out.println("Event updated successfully.");
+                } else {
+                    System.out.println("Event not found.");
+                }
+
+                System.out.println("Event " + eventName + " deleted");
             }
         } catch (SQLException e) {
             System.out.println("Failed to delete event. Error: " + e.getMessage());
