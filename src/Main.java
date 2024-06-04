@@ -60,7 +60,7 @@ public class Main {
     String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
     String eventName;
 
-    System.out.println("Which event do you want to edit: ");
+    System.out.println("Which event do you want to edit(Write the Event Name): ");
     eventName = scanner.nextLine();
 
     System.out.println("Please select an option to edit:");
@@ -79,9 +79,15 @@ public class Main {
 
     switch (option) {
         case 1:
-            System.out.println("Enter new event name: ");
-            newValue = scanner.nextLine();
-            updateQuery = "UPDATE Event SET name = ? WHERE name = ?";
+            while (true) {
+                System.out.println("Enter new event name: ");
+                newValue = scanner.nextLine();
+                if (!doesEventExist(newValue)) {
+                    updateQuery = "UPDATE Event SET name = ? WHERE name = ?";
+                    break;
+                }
+                System.out.println("Event name already exists. Please enter a different name.");
+            }
             break;
         case 2:
             System.out.println("Enter new event date (YYYY-MM-DD): ");
@@ -233,6 +239,37 @@ public class Main {
         return false;
     }
 
+    // Method to check if an event name already exists in the database
+    public static boolean doesEventExist(String eventName) {
+        String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
+        boolean exists = false;
+
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+
+            // Connect to the database
+            try (Connection connection = DriverManager.getConnection(jdbcUrl);
+                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM Event WHERE name = ?")) {
+
+                preparedStatement.setString(1, eventName);
+
+                // Execute SQL command
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // If resultSet is not empty, then the event name exists
+                exists = resultSet.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to check event. Error: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC driver not found. Make sure it is added to the classpath.");
+        }
+
+        return exists;
+    }
+
+
     public static boolean createEvent() {
         Location location = new Location();
         location.setLocationName();
@@ -262,7 +299,13 @@ public class Main {
 
         // Create an Event
         Event event = new Event(location, tickets, resources);
-        event.setName();
+        while (true) {
+            event.setName();
+            if (!doesEventExist(event.eventName)) {
+                break;
+            }
+            System.out.println("Event name already exists. Please enter a different name.");
+        }
         event.setDate();
 
         // Display Event details
