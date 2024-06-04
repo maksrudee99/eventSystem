@@ -34,10 +34,6 @@ public class Event {
         }
     }
 
-    public String getEventName() {
-        return this.eventName;
-    }
-
     public void setDate() {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

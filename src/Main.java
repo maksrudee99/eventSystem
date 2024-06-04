@@ -301,7 +301,7 @@ public class Main {
         Event event = new Event(location, tickets, resources);
         while (true) {
             event.setName();
-            if (!doesEventExist(event.getEventName())) {
+            if (!doesEventExist(event.eventName)) {
                 break;
             }
             System.out.println("Event name already exists. Please enter a different name.");
