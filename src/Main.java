@@ -19,7 +19,8 @@ public class Main {
             System.out.println("Please select an option:");
             System.out.println("1. Display all events");
             System.out.println("2. Create a new event");
-            System.out.println("3. Exit");
+            System.out.println("3. Select an event");
+            System.out.println("4. Exit");
             option = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -33,6 +34,9 @@ public class Main {
                     exit = createEvent();
                     break;
                 case 3:
+                    exit = selectEvent();
+                    break;
+                case 4:
                     System.out.println("Exiting...");
                     exit = true;
                     break;
@@ -50,8 +54,53 @@ public class Main {
         // tbd
     }
 
-    public static void selectEvent(){
-        // tbd
+    public static boolean selectEvent() {
+        Scanner scanner = new Scanner(System.in);
+        String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
+        String eventName;
+
+        System.out.println("Which event do yu want select: ");
+        eventName = scanner.nextLine();
+
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Verbindung zur Datenbank herstellen
+            try (Connection connection = DriverManager.getConnection(jdbcUrl);
+                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Event WHERE Name = ?")) {
+
+                preparedStatement.setString(1, eventName);
+
+                // SQL-Befehl ausführen
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    Date date = resultSet.getDate("date");
+                    String locationName = resultSet.getString("location_name");
+                    int capacity = resultSet.getInt("capacity");
+                    int ticketsQuantity = resultSet.getInt("tickets_quantity");
+                    String ticketPrice = resultSet.getString("ticket_price");
+                    String jsonString = resultSet.getString("resource_name");
+                    List<Resource> resourceNames = objectMapper.readValue(jsonString, new TypeReference<List<Resource>>() {
+                    });
+
+                    // Liste ausgeben
+                    System.out.printf("Name: %s, Date: %s, Location: %s, Capacity: %d, Tickets: %d, Price: %s, Resources: %s%n",
+                            name, date, locationName, capacity, ticketsQuantity, ticketPrice, resourceNames);
+                }
+            } catch (IOException e) {
+                System.out.println("Failed to decode JSON. Error: " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to retrieve event. Error: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC driver not found. Make sure it is added to the classpath.");
+        }
+
+        return false;
     }
 
     public static boolean createEvent() {
