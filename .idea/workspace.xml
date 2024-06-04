@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e10c94f-5c03-4d1a-a507-96d59409c989" name="Changes" comment="">
+    <list default="true" id="6e10c94f-5c03-4d1a-a507-96d59409c989" name="Changes" comment="Select All Events Function">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +18,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "git-widget-placeholder": "master"
+    "git-widget-placeholder": "#4 on Adrijan/rebuild-and-db"
   }
 }]]></component>
   <component name="RunManager">
@@ -37,6 +36,34 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23dd9c84-d910-4aca-81c2-a8b147bdf1ef" name="Changes" comment="" />
+      <created>1716882287823</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716882287823</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Select All Events Function">
+      <option name="closed" value="true" />
+      <created>1717407732411</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717407732411</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Select All Events Function">
+      <option name="closed" value="true" />
+      <created>1717407779685</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717407779685</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Select All Events Function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Select All Events Function" />
   </component>
 </project>

@@ -18,4 +18,9 @@ public class Resource {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "Resource: " + resourceName;
+    }
 }
