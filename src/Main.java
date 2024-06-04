@@ -20,7 +20,8 @@ public class Main {
             System.out.println("1. Display all events");
             System.out.println("2. Create a new event");
             System.out.println("3. Select an event");
-            System.out.println("4. Exit");
+            System.out.println("4. Edit an event");
+            System.out.println("5. Exit");
             option = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -37,6 +38,10 @@ public class Main {
                     exit = selectEvent();
                     break;
                 case 4:
+                    // Edit an existing event
+                    editEvent();
+                    break;
+                case 5:
                     System.out.println("Exiting...");
                     exit = true;
                     break;
@@ -46,9 +51,95 @@ public class Main {
         }
     }
 
-    public static void editEvent(){
-        // tbd
+    public static void editEvent() {
+    Scanner scanner = new Scanner(System.in);
+    String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
+    String eventName;
+
+    System.out.println("Which event do you want to edit: ");
+    eventName = scanner.nextLine();
+
+    System.out.println("Please select an option to edit:");
+    System.out.println("1. Event Name");
+    System.out.println("2. Event Date");
+    System.out.println("3. Location");
+    System.out.println("4. Capacity");
+    System.out.println("5. Tickets Quantity");
+    System.out.println("6. Ticket Price");
+    System.out.println("7. Resources");
+    int option = scanner.nextInt();
+    scanner.nextLine(); // Consume newline
+
+    String updateQuery = "";
+    String newValue = "";
+
+    switch (option) {
+        case 1:
+            System.out.println("Enter new event name: ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET name = ? WHERE name = ?";
+            break;
+        case 2:
+            System.out.println("Enter new event date (YYYY-MM-DD): ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET date = ? WHERE name = ?";
+            break;
+        case 3:
+            System.out.println("Enter new location: ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET location_name = ? WHERE name = ?";
+            break;
+        case 4:
+            System.out.println("Enter new capacity: ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET capacity = ? WHERE name = ?";
+            break;
+        case 5:
+            System.out.println("Enter new tickets quantity: ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET tickets_quantity = ? WHERE name = ?";
+            break;
+        case 6:
+            System.out.println("Enter new ticket price: ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET ticket_price = ? WHERE name = ?";
+            break;
+        case 7:
+            System.out.println("Enter new resources (as JSON string): ");
+            newValue = scanner.nextLine();
+            updateQuery = "UPDATE Event SET resource_name = ? WHERE name = ?";
+            break;
+        default:
+            System.out.println("Invalid option. Please try again.");
+            return;
     }
+
+    try {
+        // Load the SQLite JDBC driver
+        Class.forName("org.sqlite.JDBC");
+
+        // Connect to the database
+        try (Connection connection = DriverManager.getConnection(jdbcUrl);
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            preparedStatement.setString(1, newValue);
+            preparedStatement.setString(2, eventName);
+
+            // Execute SQL command
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Event updated successfully.");
+            } else {
+                System.out.println("Event not found.");
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Failed to update event. Error: " + e.getMessage());
+    } catch (ClassNotFoundException e) {
+        System.out.println("SQLite JDBC driver not found. Make sure it is added to the classpath.");
+    }
+}
 
     public static void deleteEvent(){
         // tbd
