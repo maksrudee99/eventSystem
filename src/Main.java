@@ -55,6 +55,12 @@ public class Main {
         }
     }
 
+    /**
+     * Edits an existing event.
+     * The user is prompted to select an event and the attribute they want to edit.
+     * The new value is then updated in the database.
+     * @return false to continue the program execution.
+     */
     public static boolean editEvent() {
     Scanner scanner = new Scanner(System.in);
     String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
@@ -153,6 +159,12 @@ public class Main {
     return false;
 }
 
+    /**
+     * Deletes an event.
+     * The user is prompted to enter the name of the event they want to delete.
+     * The event is then removed from the database.
+     * @return false to continue the program execution.
+     */
     public static boolean deleteEvent(){
         Scanner scanner = new Scanner(System.in);
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
@@ -190,6 +202,12 @@ public class Main {
         return false;
     }
 
+    /**
+     * Selects an event.
+     * The user is prompted to enter the name of the event they want to select.
+     * The event details are then retrieved from the database and printed to the console.
+     * @return false to continue the program execution.
+     */
     public static boolean selectEvent() {
         Scanner scanner = new Scanner(System.in);
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
@@ -239,6 +257,11 @@ public class Main {
         return false;
     }
 
+    /**
+     * Checks if an event name already exists in the database.
+     * @param eventName the name of the event to check.
+     * @return true if the event name exists, false otherwise.
+     */
     // Method to check if an event name already exists in the database
     public static boolean doesEventExist(String eventName) {
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
@@ -269,7 +292,11 @@ public class Main {
         return exists;
     }
 
-
+    /**
+     * Creates a new event.
+     * The user is prompted to enter the event details, which are then saved to the database.
+     * @return false to continue the program execution.
+     */
     public static boolean createEvent() {
         Location location = new Location();
         location.setLocationName();
@@ -324,6 +351,10 @@ public class Main {
         return false;
     }
 
+    /**
+     * Retrieves all events from the database and prints them to the console.
+     * @return false to continue the program execution.
+     */
     public static boolean selectAllEvents() {
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
         try {
