@@ -1,11 +1,19 @@
 import java.util.Scanner;
 
+/**
+ * This class represents a resource that can be used in an event.
+ */
 public class Tickets {
+    // class attributes
     public int quantity;
     public double price;
 
     public Tickets() {}
 
+    /**
+     * Sets the quantity of tickets.
+     * The user is prompted to enter the quantity until a valid integer is provided.
+     */
     public void setQuantity() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -20,6 +28,10 @@ public class Tickets {
         }
     }
 
+    /**
+     * Sets the price of tickets.
+     * The user is prompted to enter the price until a valid number is provided.
+     */
     public void setPrice() {
         Scanner scanner = new Scanner(System.in);
         while (true) {

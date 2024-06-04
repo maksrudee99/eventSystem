@@ -1,11 +1,18 @@
 import java.util.Scanner;
 
+/**
+ * This class represents a location where an event can be held.
+ */
 public class Location {
     public String locationName;
     public int capacity;
 
     public Location() {}
 
+    /**
+     * Sets the name of the location.
+     * The user is prompted to enter the location name until a non-empty string is provided.
+     */
     public void setLocationName() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -20,6 +27,10 @@ public class Location {
         }
     }
 
+    /**
+     * Sets the capacity of the location.
+     * The user is prompted to enter the location capacity until a valid integer is provided.
+     */
     public void setCapacity() {
         Scanner scanner = new Scanner(System.in);
         while (true) {

@@ -20,6 +20,10 @@ public class Event {
         this.resources = resources;
     }
 
+    /**
+     * Sets the name of the event.
+     * The user is prompted to enter the event name until a non-empty string is provided.
+     */
     public void setName() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -34,6 +38,10 @@ public class Event {
         }
     }
 
+    /**
+     * Sets the date of the event.
+     * The user is prompted to enter the event date until a valid date in the future is provided.
+     */
     public void setDate() {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -59,6 +67,10 @@ public class Event {
         }
     }
 
+    /**
+     * Saves the event to the database.
+     * The event data is saved to the "Event" table in the SQLite database.
+     */
     public void saveEvent() {
         String jdbcUrl = "jdbc:sqlite:C:\\Java\\Sqlite\\eventSystem.db";
 
