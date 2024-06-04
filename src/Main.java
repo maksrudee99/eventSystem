@@ -79,9 +79,15 @@ public class Main {
 
     switch (option) {
         case 1:
-            System.out.println("Enter new event name: ");
-            newValue = scanner.nextLine();
-            updateQuery = "UPDATE Event SET name = ? WHERE name = ?";
+            while (true) {
+                System.out.println("Enter new event name: ");
+                newValue = scanner.nextLine();
+                if (!doesEventExist(newValue)) {
+                    updateQuery = "UPDATE Event SET name = ? WHERE name = ?";
+                    break;
+                }
+                System.out.println("Event name already exists. Please enter a different name.");
+            }
             break;
         case 2:
             System.out.println("Enter new event date (YYYY-MM-DD): ");
