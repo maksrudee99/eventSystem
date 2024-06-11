@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Packages">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Packages/jackson-core-2.17.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Packages/jackson-annotations-2.17.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Packages/slf4j-api-2.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Packages/sqlite-jdbc-3.45.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Packages/jackson-databind-2.1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
